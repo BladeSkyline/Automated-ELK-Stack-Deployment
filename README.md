@@ -10,15 +10,27 @@ Calixto Gonzalez 5/22/2022 Cyber Security Boot Camp
 
 *The files in this repository were used to configure the network depicted below.
 
------
+![Cloud Security-Page-1](https://user-images.githubusercontent.com/105831725/169916907-68c42054-aa0d-4e9c-bd61-450782085be5.jpg)
 
 
 
-These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the _____ file may be used to install only certain pieces of it, such as Filebeat.
+
+These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the *Project 1 Red Team Network Diagram file may be used to install only certain pieces of it, such as Filebeat*.
+
+[Ansible-DVWA-Install.txt](https://github.com/BladeSkyline/Automated-ELK-Stack-Deployment/files/8758486/Ansible-DVWA-Install.txt)
+
+[Ansible-hosts.txt](https://github.com/BladeSkyline/Automated-ELK-Stack-Deployment/files/8758462/Ansible-hosts.txt)
+
+[ansible-configuration.txt](https://github.com/BladeSkyline/Automated-ELK-Stack-Deployment/files/8758454/ansible.txt)
 
 [filebeat-playbook.yml.txt](https://github.com/BladeSkyline/Automated-ELK-Stack-Deployment/files/8749569/filebeat-playbook.yml.txt)
 
 [filebeat-configuration.txt](https://github.com/BladeSkyline/Automated-ELK-Stack-Deployment/files/8749605/filebeat-configuration.txt)
+
+[metricbeat-playbook.txt](https://github.com/BladeSkyline/Automated-ELK-Stack-Deployment/files/8758438/metricbeat-playbook.txt)
+
+[metricbeat-configuration.txt](https://github.com/BladeSkyline/Automated-ELK-Stack-Deployment/files/8758439/metricbeat-configuration.txt)
+
 
 
 This document contains the following details:
@@ -32,42 +44,48 @@ This document contains the following details:
 
 ### Description of the Topology
 
-The main purpose of this network is to expose a load-balanced and monitored instance of DVWA, the D*mn Vulnerable Web Application.
+The main purpose of this network is to expose a load-balanced and monitored instance of DVWA, the Damn Vulnerable Web Application.
 
-Load balancing ensures that the application will be highly _____, in addition to restricting _____ to the network.
-- _TODO: What aspect of security do load balancers protect? What is the advantage of a jump box?_
+Load balancing ensures that the application will be highly functioanl, in addition to restricting high-traffic to the network.
+-What aspect of security do load balancers protect?
+  ..*-It helps prevent overloading servers as well as optimizes productivity and maximizes uptime.
+  ..*-It also adds resiliency by rerouting live traffic from one server to another causing it to eliminate single points of failure from attacks such as DDoS attack.
+  
+-What is the advantage of a jump box?
+  ..*-Jump-box are highly secured computers that are never used for non-admin tasks. -Throughout the years, jump-box has improved into an even more comprehensive/lock-down secure admin workstation to decrease the chances of hackers/malware infection.
 
-Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the _____ and system _____.
-- _TODO: What does Filebeat watch for?_
-- _TODO: What does Metricbeat record?_
+Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the data network and system logs.
+-..*What does Filebeat watch for?_  Filebeat monitors the log files or locations that you specify, collects log events, and forwards them either to Elasticsearch or Logstash for indexing.
+-..*What does Metricbeat record?_ Metricbeat takes the metrics and statistics that it collects and ships them to the output that you specify, such as Elasticsearch or Logstash.
 
 The configuration details of each machine may be found below.
 _Note: Use the [Markdown Table Generator](http://www.tablesgenerator.com/markdown_tables) to add/remove values from the table_.
 
 | Name     | Function | IP Address | Operating System |
 |----------|----------|------------|------------------|
-| Jump Box | Gateway  | 10.0.0.1   | Linux            |
-| TODO     |          |            |                  |
-| TODO     |          |            |                  |
-| TODO     |          |            |                  |
-
+| Jump Box | Gateway  | 10.0.0.6/ Dyanmic IP  | Linux |
+| Web Box 1 | Web Server | 10.0.0.4 |  Linux |
+| Web Box 2 | Web Server | 10.0.0.5 |  Linux |
+| Elk Stack | Elk Server | 10.1.0.4/ Dynamic IP | Linux |
+| Workstaion | Access Control |  External or Public IP | Any |
 ### Access Policies
 
 The machines on the internal network are not exposed to the public Internet. 
 
-Only the _____ machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
-- _TODO: Add whitelisted IP addresses_
+Only the ELK machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
+..*Workstation Public IP through TCP 5601.
 
-Machines within the network can only be accessed by _____.
-- _TODO: Which machine did you allow to access your ELK VM? What was its IP address?_
+Machines within the network can only be accessed by Workstation and Jump Box.
+..*
 
 A summary of the access policies in place can be found in the table below.
 
 | Name     | Publicly Accessible | Allowed IP Addresses |
 |----------|---------------------|----------------------|
-| Jump Box | Yes/No              | 10.0.0.1 10.0.0.2    |
-|          |                     |                      |
-|          |                     |                      |
+| Jump Box | No                  |  Workstation Public IP on SSH 22   |
+| Web Box 1 | No                 |                      |
+| Web Box 2 | No                 |                      |
+| Elk Server | No                | Workstation Public IP using TCP 5601 |
 
 ### Elk Configuration
 
@@ -107,3 +125,8 @@ _TODO: Answer the following questions to fill in the blanks:_
 - _Which URL do you navigate to in order to check that the ELK server is running?
 
 _As a **Bonus**, provide the specific commands the user will need to run to download the playbook, update the files, etc._
+
+
+
+
+
