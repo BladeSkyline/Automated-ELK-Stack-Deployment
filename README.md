@@ -10,7 +10,7 @@ Calixto Gonzalez 5/22/2022 Cyber Security Boot Camp
 
 *The files in this repository were used to configure the network depicted below.
 
-![Cloud Security-Page-1](https://user-images.githubusercontent.com/105831725/169699383-5d46e72a-01b3-464a-97ca-468781a48ee6.jpg)
+-----
 
 
 
