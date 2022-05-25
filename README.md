@@ -90,39 +90,134 @@ A summary of the access policies in place can be found in the table below.
 ### Elk Configuration
 
 Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because...
-- _TODO: What is the main advantage of automating configuration with Ansible?_
+- _Ansible lets you quickly and easily deploy multitier apps. You won't need to write custom code to automate your systems; you list the tasks required to be done by writing a playbook, and Ansible will figure out how to get your systems to the state you want them to be in _
 
 The playbook implements the following tasks:
-- _TODO: In 3-5 bullets, explain the steps of the ELK installation play. E.g., install Docker; download image; etc._
-- ...
-- ...
+..*Specify a different group of machines as well as a different remote user 
+
+  - name: Config elk VM with Docker
+    hosts: elk
+    remote_user: sysadmin
+    become: true
+    tasks:
+    
+    
+..*Increase System Memory : 
+
+ - name: Use more memory
+  sysctl:
+    name: vm.max_map_count
+    value: '262144'
+    state: present
+    reload: yes
+
+
+..*Install the following services: 
+
+   `docker.io`
+   `python3-pip`
+   `docker`, which is the Docker Python pip module.
+   
+   
+ ..*Launching and Exposing the container with these published ports: 
+
+ `5601:5601` 
+ `9200:9200`
+ `5044:5044`
+
+
+
 
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
+![Screenshot (45)](https://user-images.githubusercontent.com/105831725/170170762-6101bc47-8dac-42d8-a977-0fab8d52cc6e.png)
 
-![TODO: Update the path with the name of your screenshot of docker ps output](Images/docker_ps_output.png)
+
+
+![Screenshot (51)](https://user-images.githubusercontent.com/105831725/170170804-564cd30b-5cfe-47f9-bb85-9cfeff6f8378.png)
+
+![Screenshot (52)](https://user-images.githubusercontent.com/105831725/170170812-ccbd6c1c-c3fb-40a8-b125-aa493733a5d8.png)
+
+
 
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
-- _TODO: List the IP addresses of the machines you are monitoring_
+- ..*Web Box 1 10.0.0.4_
+- ..*Web Box 2 10.0.0.5_
 
 We have installed the following Beats on these machines:
-- _TODO: Specify which Beats you successfully installed_
+
+  ..*ELK Server, Web1 and Web2
+  ..*The ELK Stack Installed are: FileBeat and MetricBeat
+
 
 These Beats allow us to collect the following information from each machine:
-- _TODO: In 1-2 sentences, explain what kind of data each beat collects, and provide 1 example of what you expect to see. E.g., `Winlogbeat` collects Windows logs, which we use to track user logon events, etc._
+   ..*Filebeat: log events
+   ..*Metricbeat: metrics and system statistics
+
 
 ### Using the Playbook
 In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned: 
 
 SSH into the control node and follow the steps below:
-- Copy the _____ file to _____.
-- Update the _____ file to include...
-- Run the playbook, and navigate to ____ to check that the installation worked as expected.
+ For Elk VM Configuration
+- Copy the Ansible ELK Installation and VM Configuration 
+- Run the playbook using this command : ansible-playbook install-elk.yml
+ 
+ For Filebeat:
+Download Filebeat playbook usng this command:
+
+    curl -L -O https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat > /etc/ansible/files/filebeat-config.yml
+Copy the '/etc/ansible/filebeat-config.yml' file to '/etc/filebeat/filebeat-playbook.yml'
+Update the filebeat-playbook.yml file to include installer
+
+    curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.6.1-amd64.deb
+
+output.elasticsearch:
+  #Array of hosts to connect to.
+ hosts: ["10.1.0.4:9200"]
+  username: "elastic"
+  password: "changeme” 
+
+ setup.kibana:
+  host: "10.1.0.4:5601"
+
+
+- Run the playbook using this command ansible-playbook filebeat-playbook.yml and navigate to Kibana > Logs : Add log data > System logs > 5:Module Status > Check data to check that the installation worked as expected.
+
+For Metric beat:
+
+Download Metricbeat playbook using this command:
+
+    curl -L -O https://gist.githubusercontent.com/slape/58541585cc1886d2e26cd8be557ce04c/raw/0ce2c7e744c54513616966affb5e9d96f5e12f73/metricbeat > /etc/ansible/files/metricbeat-config.yml
+
+Copy the /etc/ansible/metricbeat file to /etc/metricbeat/metricbeat-playbook.yml
+
+Update the metricbeat-playbook.yml file to include installer
+
+    curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.6.1-amd64.deb
+
+output.elasticsearch:
+#Array of hosts to connect to.
+hosts: ["10.1.0.4:9200"]
+  username: "elastic"
+  password: "changeme"
+
+setup.kibana:
+  host: "10.1.0.4:5601"
+
+
+
 
 _TODO: Answer the following questions to fill in the blanks:_
 - _Which file is the playbook? Where do you copy it?_
+
+
 - _Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?_
+
+
 - _Which URL do you navigate to in order to check that the ELK server is running?
+Test Kibana on web : http://[your.ELK-VM.External.IP]:5601/app/kibana
+
 
 _As a **Bonus**, provide the specific commands the user will need to run to download the playbook, update the files, etc._
 
