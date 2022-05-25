@@ -52,11 +52,14 @@ Load balancing ensures that the application will be highly functioanl, in additi
   ..*-It also adds resiliency by rerouting live traffic from one server to another causing it to eliminate single points of failure from attacks such as DDoS attack.
   
 -What is the advantage of a jump box?
-  ..*-Jump-box are highly secured computers that are never used for non-admin tasks. -Throughout the years, jump-box has improved into an even more comprehensive/lock-down secure admin workstation to decrease the chances of hackers/malware infection.
 
+..*Jump-box are highly secured computers that are never used for non-admin tasks. Throughout the years, jump-box has improved into an even more comprehensive/lock-down secure admin workstation to decrease the chances of hackers/malware infection.
 Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the data network and system logs.
--..*What does Filebeat watch for?_  Filebeat monitors the log files or locations that you specify, collects log events, and forwards them either to Elasticsearch or Logstash for indexing.
--..*What does Metricbeat record?_ Metricbeat takes the metrics and statistics that it collects and ships them to the output that you specify, such as Elasticsearch or Logstash.
+
+-..*What does Filebeat watch for?_  
+  ..*Filebeat monitors the log files or locations that you specify, collects log events, and forwards them either to Elasticsearch or Logstash for indexing.
+-..*What does Metricbeat record?_ 
+  ..*Metricbeat takes the metrics and statistics that it collects and ships them to the output that you specify, such as Elasticsearch or Logstash.
 
 The configuration details of each machine may be found below.
 _Note: Use the [Markdown Table Generator](http://www.tablesgenerator.com/markdown_tables) to add/remove values from the table_.
@@ -208,20 +211,46 @@ setup.kibana:
 
 
 
-_TODO: Answer the following questions to fill in the blanks:_
+ Answer the following questions to fill in the blanks:_
 - _Which file is the playbook? Where do you copy it?_
-
+Copy the elk_install.yml file to /etc/ansible/roles/elk_install.yml
 
 - _Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?_
-
+Update the /etc/ansible/hosts file to include the elk group and add the target vm's ip address to that group
 
 - _Which URL do you navigate to in order to check that the ELK server is running?
+
 Test Kibana on web : http://[your.ELK-VM.External.IP]:5601/app/kibana
 
 
 _As a **Bonus**, provide the specific commands the user will need to run to download the playbook, update the files, etc._
 
+curl -L -O https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat > /etc/ansible/files/filebeat-config.yml'
 
+    Note : The filebeat-config.yml as our filebeat configuration file.
+
+
+curl -L -O https://gist.githubusercontent.com/slape/58541585cc1886d2e26cd8be557ce04c/raw/0ce2c7e744c54513616966affb5e9d96f5e12f73/metricbeat > /etc/ansible/files/metricbeat-config.yml'
+
+    Note : the metricbeat-config.yml as our metricbeat configuration file. ```
+
+
+
+
+
+| Command  | Purpose  |
+|---|---|
+| sudo apt-get update | this will update all packages  |
+| sudo apt install docker.io| install docker application  |
+| sudo service docker start  | start the docker application  |
+| systemctl status docker  |status of the docker application   |
+| sudo docker pull cyberxsecurity/ansible  | download the docker file  |
+| sudo docker run -ti cyberxsecurity/ansible bash  | run and create a docker image  |
+| sudo docker start <image-name>  |starts the image specified   |
+| sudo docker ps -a  | list all active/inactive containers  |
+| sudo docker attach <image-name>  |effectively sshing into the ansible   |
+| ssh-keygen  | create a ssh key  |
+| ansible -m ping all  |check the connection of ansible containers   |
 
 
 
